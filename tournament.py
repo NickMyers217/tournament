@@ -32,6 +32,7 @@ def countPlayers():
     conn = connect()
     c = conn.cursor()
     c.execute("SELECT COUNT(*) FROM Players;")
+    # The first value converted to an int is the count
     numPlayers = int(c.fetchall()[0][0])
     conn.close()
     return numPlayers
@@ -48,6 +49,7 @@ def registerPlayer(name):
     """
     conn = connect()
     c = conn.cursor()
+    # Make sure to parameterize the query properly with a tuple
     c.execute("INSERT INTO Players (name) VALUES (%s);", (name,))
     conn.commit()
     conn.close()
@@ -108,10 +110,8 @@ def swissPairings():
     """
     conn = connect()
     c = conn.cursor()
+    # All the magic is performed in the sql query
     c.execute("SELECT * FROM Pairings;")
     pairings = c.fetchall()
     conn.close()
     return pairings
-    
-
-
